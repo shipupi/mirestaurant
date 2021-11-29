@@ -1,0 +1,12 @@
+{
+    "restaurant": {
+        "database": {
+            "host": "",
+            "port": 1234,
+            "database_name": "restaurants"
+        },
+        "server": {
+            "port": 8085
+        }
+    }
+}

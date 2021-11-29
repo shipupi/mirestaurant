@@ -1,0 +1,23 @@
+{
+  "name": "restaurants",
+  "version": "1.0.0",
+  "description": "Restaurant reviewer for toptal screening",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "toptal",
+    "rest",
+    "api",
+    "restaurant",
+    "review"
+  ],
+  "author": "Brian Ail",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.6",
+    "express": "^4.17.1"
+  }
+}
