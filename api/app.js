@@ -1,6 +1,5 @@
 const config = require('config');
 const express = require('express');
-require('express-async-errors');
 const app = express();
 const routes = require('./routes/routes');
   

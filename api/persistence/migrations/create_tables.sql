@@ -16,6 +16,8 @@ CREATE TABLE  IF NOT EXISTS reviews (
     rating int NOT NULL,
     restaurant_id int NOT NULL,
     user_id int NOT NULL,
+    comment VARCHAR(255) NOT NULL,
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     CONSTRAINT fk_rev_restaurant_id FOREIGN KEY (restaurant_id)
     REFERENCES restaurants (restaurant_id)

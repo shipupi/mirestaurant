@@ -1,7 +1,13 @@
 const {prisma} = require('../prisma/client');
 
+const user_select = {
+  user_id: true,
+  name: true,
+  email: true
+};
+
 exports.get_users = async function() {
-  const users = await prisma.users.findMany();
+  const users = await prisma.users.findMany({select: user_select});
   return users;
 }
 
@@ -20,15 +26,26 @@ exports.find_by_email = async function(email) {
   const user = await prisma.users.findUnique({
     where: {
       email: email
-    }
+    }, 
+    select: user_select
+  }); 
+  return user;
+}
+
+exports.find_by_id = async function(id) {
+  const user = await prisma.users.findUnique({
+    where: {
+      user_id: id
+    }, 
+    select: user_select
   }); 
   return user;
 }
 
 exports.delete_user = async function(user_id) {
   const user_deletion = await prisma.users.delete({where: {
-    id: user_id
+    user_id: user_id
   }});
-  console.log(user_deletion);
+  return user_deletion;
 
 }

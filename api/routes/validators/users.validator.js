@@ -1,6 +1,6 @@
 const user_service = require('../../services/users.service');
 
-exports.userCreationValidator = {
+exports.userValidator = {
     name: {
         isLength: {
             min: 3,
@@ -22,7 +22,6 @@ exports.userCreationValidator = {
         custom: {
             options: async (value) => {
                 maybe_user = await user_service.find_by_email(value);
-                console.log(maybe_user);
                 if (maybe_user) {
                     return Promise.reject("Email already in use");
                 }
