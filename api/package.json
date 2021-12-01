@@ -17,7 +17,13 @@
   "author": "Brian Ail",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^3.6.0",
     "config": "^3.3.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.13.0"
+  },
+  "devDependencies": {
+    "prisma": "^3.6.0"
   }
 }
