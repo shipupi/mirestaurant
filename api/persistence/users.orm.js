@@ -6,18 +6,23 @@ exports.get_users = async function() {
 }
 
 exports.create_user = async function(name, email, hashed_password) {
-  try {
-    const user_creation = await prisma.users.create({
-      data: {
-        email: email,
-        password: hashed_password,
-        name: name
-      }
-    });
-    return user_creation;
-  } catch (e) {
-    throw e;
-  }
+  const user_creation = await prisma.users.create({
+    data: {
+      email: email,
+      password: hashed_password,
+      name: name
+    }
+  });
+  return user_creation;
+}
+
+exports.find_by_email = async function(email) {
+  const user = await prisma.users.findUnique({
+    where: {
+      email: email
+    }
+  }); 
+  return user;
 }
 
 exports.delete_user = async function(user_id) {

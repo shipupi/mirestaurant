@@ -11,7 +11,8 @@ exports.create_user = async function(req, res) {
     let hash = crypto.createHmac('sha512', salt);
     hash.update(req.body.password);
     let hashed_password = hash.digest('base64');
-    let user = user_service.create_user(req.body.name, req.body.email, hashed_password);
+    let user = await user_service.create_user(req.body.name, req.body.email, hashed_password);
+    res.status(201).json(user.user_id);
 };
 
 exports.delete_user = async function(req, res) {
