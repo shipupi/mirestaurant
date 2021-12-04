@@ -5,20 +5,29 @@ exports.get_restaurants = async function() {
   return restaurants;
 }
 
-exports.create_restaurant = async function(name) {
+exports.create_restaurant = async function(name, slug) {
   const restaurant_creation = await prisma.restaurants.create({
     data: {
-      name: name
+      name: name,
+      slug: slug
     }
   });
   return restaurant_creation;
 } 
 
 exports.find_by_id = async function(id) {
-  console.log("attempting to find restaurant: ", id);
   const restaurant = await prisma.restaurants.findUnique({
     where: {
       restaurant_id: id
+    }
+  }); 
+  return restaurant;
+}
+
+exports.find_by_slug = async function(slug) {
+  const restaurant = await prisma.restaurants.findUnique({
+    where: {
+      slug: slug
     }
   }); 
   return restaurant;

@@ -10,6 +10,7 @@ datasource db {
 model restaurants {
   restaurant_id Int       @id @default(autoincrement())
   name          String    @unique @db.VarChar(50)
+  slug          String    @unique @db.VarChar(50)
   reviews       reviews[]
 }
 

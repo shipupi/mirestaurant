@@ -8,8 +8,13 @@ exports.get_restaurants = async function(req, res) {
 exports.create_restaurant = async function(req, res) {
     try {
         let restaurant = await restaurant_service.create_restaurant(req.body.name);
+        if (!restaurant) {
+            res.status(400).send("Restaurant already exists");
+            return;
+        }
         res.status(201).json(restaurant.restaurant_id);
     } catch (e) {
+        console.log(e);
         res.status(500).send("Unable to create restaurant.");
     }
 };
