@@ -30,5 +30,6 @@ model users {
   email    String    @unique @db.VarChar(50)
   name     String    @db.VarChar(50)
   password String    @db.VarChar(255)
+  is_admin Boolean   @default(false)
   reviews  reviews[]
 }
