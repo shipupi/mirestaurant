@@ -7,12 +7,13 @@
     </div>
     <div class="section no-pad-bot" id="index-banner" v-if="Object.keys(restaurant).length > 0">
       <div class="container">
-          <h1 class="header orange-text">Red Lobster</h1>
-          <div class="title-container"><Rating :rating="4.3" name="Red Lobster"/></div>
+          <h1 class="header orange-text">{{restaurant.name}}</h1>
+          <div class="title-container"><Rating :rating="restaurant.rating" name="restaurant.name"/></div>
       </div>
     </div>
     <div class="container" v-if="Object.keys(restaurant).length > 0">
-      <div class="row">
+      <div v-if="Object.keys(restaurant.reviews).length == 0"><h3>No reviews found</h3></div>
+      <div class="row card-container" v-if="Object.keys(restaurant.reviews).length > 0">
         <div class="col s12 m3">
           <div class="row title-container">
             <h3 class="blue-text center-align"> Latest review  </h3>
@@ -92,9 +93,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.row {
-  display: flex;
-}
 
 .col {
   margin-right: auto;
@@ -104,5 +102,10 @@ export default {
   width: fit-content;
   margin-right: auto;
   margin-left: auto;
+}
+.card-container {
+  display: flex;
+  flex-flow: wrap;
+
 }
 </style>

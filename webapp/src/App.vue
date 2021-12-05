@@ -8,15 +8,25 @@
   </div>
 </template>
 <script>
-import Nav from './components/Nav.vue'
-import Footer from './components/Footer.vue'
+import Nav from './components/template/Nav.vue'
+import Footer from './components/template/Footer.vue'
 
 export default {
   name: 'App',
   components: {
     Nav,
     Footer
-  }
+  },
+  beforeMount() {
+    let jwt = localStorage.getItem('jwt')
+    if (jwt) {  
+      this.$http.defaults.headers.common = {'Authorization': `Bearer ${jwt}`}
+      console.log("setting authorization", this.$http.defaults.headers.common)
+    } else {
+      console.log("no authorization found")
+    }
+
+  },
 }
 </script>
 <style>

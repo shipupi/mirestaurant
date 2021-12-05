@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../components/Home.vue'
-import Restaurant from '../components/Restaurant.vue'
-import Auth from '../components/Auth.vue'
-import NotFound from '../components/NotFound.vue'
+import Home from '../components/views/Home.vue'
+import Restaurant from '../components/views/Restaurant.vue'
+import Auth from '../components/auth/Auth.vue'
+import Admin from '../components/admin/Admin.vue'
+import EditRestaurant from '../components/admin/EditRestaurant.vue'
+import EditUser from '../components/admin/EditUser.vue'
+import NotFound from '../components/errors/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +30,24 @@ const routes = [
     }
   },
   {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    meta: {
+      adminOnly: true
+    }
+  },
+  {
+    path: '/admin/restaurants/:slug',
+    name: 'EditRestaurant',
+    component: EditRestaurant,
+  },
+  {
+    path: '/admin/users/:user_id',
+    name: 'EditUser',
+    component: EditUser,
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: NotFound
@@ -41,15 +62,14 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.adminOnly)) {
     if (localStorage.getItem('jwt') == null) {
       next({
-        path: '/login',
-        params: { nextUrl: to.fullPath }
+        path: '/auth',
       })
     } else {
       let user = JSON.parse(localStorage.getItem('user'))
-      if (to.matched.some(record => record.meta.is_admin)) {
+      if (to.matched.some(record => record.meta.adminOnly)) {
         if (user.is_admin) {
           next()
         } else {

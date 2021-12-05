@@ -39,6 +39,7 @@ const find_by_slug = async function(slug) {
         return null;
     }
     if (restaurant.reviews.length > 0) {
+        restaurant.rating = round(restaurant.reviews.reduce((a, b) => a + b.rating, 0) / restaurant.reviews.length)
         restaurant.reviews.sort((a, b) => b.date - a.date)
         let latest = restaurant.reviews[0];
         restaurant.reviews.sort((a, b) => b.rating - a.rating)

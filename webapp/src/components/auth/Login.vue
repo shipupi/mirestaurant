@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import EventBus from '../EventBus'
+import EventBus from '../../EventBus'
 
 export default {
   name: 'Login',
@@ -49,6 +49,7 @@ export default {
                 let is_admin = response.data.user.is_admin
                 localStorage.setItem('user',JSON.stringify(response.data.user))
                 localStorage.setItem('jwt',response.data.access_token)
+                this.$http.defaults.headers.common = {'Authorization': `bearer ${response.data.access_token}`}
                 if (localStorage.getItem('jwt') != null) {
                     EventBus.$emit('loggedIn')
                     if (is_admin == true) {

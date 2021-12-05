@@ -7,7 +7,12 @@ const user_select = {
 };
 
 exports.get_users = async function() {
-  const users = await prisma.users.findMany({select: user_select});
+  const users = await prisma.users.findMany({
+    select: user_select,
+    orderBy: {
+      user_id: "asc"
+    }
+  });
   return users;
 }
 
@@ -37,6 +42,21 @@ exports.find_by_id = async function(id) {
       user_id: id
     }
   }); 
+  return user;
+}
+
+exports.patch_user = async function(id, name, email, hashed_password, is_admin) {
+  let data = {}
+  if (name) data.name = name;
+  if (email) data.email = email;
+  if (hashed_password) data.password = hashed_password;
+  if (is_admin) data.is_admin = is_admin;
+  const user = await prisma.users.update({
+    where: {
+      user_id: id
+    },
+    data: data
+  });
   return user;
 }
 

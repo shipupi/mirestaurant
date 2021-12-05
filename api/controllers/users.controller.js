@@ -9,6 +9,16 @@ exports.get_users = async function(req, res) {
     res.send(users);
 };
 
+exports.get_by_id = async function(req, res) {
+    let user_id = parseInt(req.params.user_id);
+    let user = await user_service.find_by_id(user_id);
+    if (!user) {
+        console.log("Username not found");
+        return res.status(404).send();
+    }
+    res.send(user);
+};
+
 exports.create_user = async function(req, res) {
     let hashed_password = auth_middleware.hash_password(req.body.password);
     try {
@@ -40,9 +50,17 @@ exports.delete_user = async function(req, res) {
     }
 };
 
-exports.edit_user = async function(req, res) {
+exports.patch_user = async function(req, res) {
     let user_id = parseInt(req.params.user_id);
-    res.send('NOT IMPLEMENTED: edit user');
+    if (req.body.password) {
+        req.body.password = auth_middleware.hash_password(req.body.password);
+    }
+    try {
+        let user = await user_service.patch_user(user_id, req.body.name, req.body.email, req.body.password, req.body.is_admin);
+        res.send(user);
+    } catch (e) {
+        res.status(500).send("Unable to patch user.");
+    }
 };
 
 const create_token = (user) => {

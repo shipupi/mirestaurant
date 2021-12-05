@@ -23,5 +23,5 @@ app.use('/api', routes)
 app.use(errorHandler);
 
 app.listen(process.env.API_PORT, function () {
-    console.log('app listening ats port %s', process.env.API_PORT);
+    console.log('app listening at port %s', process.env.API_PORT);
 });

@@ -10,6 +10,11 @@ exports.create_user = async function(name, email, hashed_password) {
     return user;
 }
 
+exports.patch_user = async function(id, name, email, hashed_password, is_admin) {
+    let user = await users_orm.patch_user(id, name, email, hashed_password, is_admin);
+    return user;
+}
+
 exports.find_by_email = async function(email) {
     return users_orm.find_by_email(email);
 }
