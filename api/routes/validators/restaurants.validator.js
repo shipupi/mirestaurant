@@ -1,6 +1,6 @@
 const restaurant_service = require('../../services/restaurants.service');
 
-exports.restaurantValidator = {
+exports.restaurant_validator = {
     name: {
         isLength: {
             min: 3,

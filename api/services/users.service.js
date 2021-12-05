@@ -5,7 +5,9 @@ exports.get_users = async function() {
 }
 
 exports.create_user = async function(name, email, hashed_password) {
-    return users_orm.create_user(name, email, hashed_password);
+    let user =  await users_orm.create_user(name, email, hashed_password);
+    delete user['password'];
+    return user;
 }
 
 exports.find_by_email = async function(email) {

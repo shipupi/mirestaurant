@@ -1,5 +1,8 @@
 const user_service = require('../services/users.service');
+const auth_middleware = require('../middleware/auth.middleware');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+
 
 exports.get_users = async function(req, res) {
     let users = await user_service.get_users();
@@ -7,14 +10,16 @@ exports.get_users = async function(req, res) {
 };
 
 exports.create_user = async function(req, res) {
-    let salt = crypto.randomBytes(32)
-    let hash = crypto.createHmac('sha512', salt);
-    hash.update(req.body.password);
-    let hashed_password = hash.digest('base64');
+    let hashed_password = auth_middleware.hash_password(req.body.password);
     try {
         let user = await user_service.create_user(req.body.name, req.body.email, hashed_password);
-        res.status(201).json(user.user_id);
+        let token = create_token(user);
+        res.status(201).json({
+            access_token: token,
+            user: user
+        });
     } catch (e) {
+        console.log(e);
         res.status(500).send("Unable to create user.");
     }
 };
@@ -39,3 +44,18 @@ exports.edit_user = async function(req, res) {
     let user_id = parseInt(req.params.user_id);
     res.send('NOT IMPLEMENTED: edit user');
 };
+
+const create_token = (user) => {
+    return jwt.sign(user, process.env.JWT_SECRET);
+}
+
+exports.generate_jwt = async function(req, res) {
+    let token = create_token(req.body.user);
+    return res.status(200).send(
+        {
+            access_token: token,
+            user: req.body.user
+        }
+    );
+    
+}

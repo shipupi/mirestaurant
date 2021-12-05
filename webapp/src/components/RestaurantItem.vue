@@ -1,7 +1,7 @@
 <template>
         <tr class="row" v-on:click="$router.push('/restaurants/' + slug)">   
             <td>{{name}}</td>
-            <td><Rating :name="name" :rating="rating"/></td>
+            <td><Rating :name="name" v-if="rating >= 1" :rating="rating"/></td>
         </tr>
 </template>
 

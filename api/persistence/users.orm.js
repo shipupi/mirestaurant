@@ -27,7 +27,6 @@ exports.find_by_email = async function(email) {
     where: {
       email: email
     }, 
-    select: user_select
   }); 
   return user;
 }
@@ -36,8 +35,7 @@ exports.find_by_id = async function(id) {
   const user = await prisma.users.findUnique({
     where: {
       user_id: id
-    }, 
-    select: user_select
+    }
   }); 
   return user;
 }

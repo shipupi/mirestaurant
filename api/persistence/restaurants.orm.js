@@ -1,7 +1,11 @@
 const {prisma} = require('../prisma/client');
 
 exports.get_restaurants = async function() {
-  const restaurants = await prisma.restaurants.findMany();
+  const restaurants = await prisma.restaurants.findMany({
+    include: {
+      reviews: true
+    }
+  });
   return restaurants;
 }
 
@@ -19,7 +23,14 @@ exports.find_by_id = async function(id) {
   const restaurant = await prisma.restaurants.findUnique({
     where: {
       restaurant_id: id
-    }
+    },
+    include: {
+      reviews: {
+        include: {
+          users: true
+        }
+      }
+    },
   }); 
   return restaurant;
 }
@@ -28,7 +39,14 @@ exports.find_by_slug = async function(slug) {
   const restaurant = await prisma.restaurants.findUnique({
     where: {
       slug: slug
-    }
+    },
+    include: {
+      reviews: {
+        include: {
+          users: true
+        }
+      }
+    },
   }); 
   return restaurant;
 }

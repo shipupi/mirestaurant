@@ -1,7 +1,23 @@
 const restaurants_orm = require('../persistence/restaurants.orm');
 
+
+const round = (n) => {
+    return Math.round((n + Number.EPSILON)  * 100) / 100
+}
+
 exports.get_restaurants = async function() {
-    return restaurants_orm.get_restaurants();
+    let restaurants = await restaurants_orm.get_restaurants();
+    return restaurants.map(restaurant => {
+        if (restaurant.reviews.length) {
+            restaurant.rating = round(restaurant.reviews.reduce((a, b) => a + b.rating, 0) / restaurant.reviews.length)
+            delete restaurant["reviews"]
+        } else {
+            restaurant.rating = -1
+            delete restaurant["reviews"]
+        }
+        return restaurant
+        
+    }).sort((a,b) => b.rating - a.rating);
 }
 
 exports.create_restaurant = async function(name) {
@@ -18,7 +34,29 @@ exports.find_by_name = async function(name) {
 }
 
 const find_by_slug = async function(slug) {
-    return restaurants_orm.find_by_slug(slug);
+    let restaurant = await restaurants_orm.find_by_slug(slug);
+    if (!restaurant) {
+        return null;
+    }
+    if (restaurant.reviews.length > 0) {
+        restaurant.reviews.sort((a, b) => b.date - a.date)
+        let latest = restaurant.reviews[0];
+        restaurant.reviews.sort((a, b) => b.rating - a.rating)
+        let highest = restaurant.reviews[0];
+        let lowest = restaurant.reviews[restaurant.reviews.length - 1]
+        restaurant.reviews = {
+            highest: highest,
+            lowest: lowest,
+            latest: latest
+        }
+        restaurant.reviews.highest.user = restaurant.reviews.highest.users.name
+        restaurant.reviews.lowest.user = restaurant.reviews.lowest.users.name
+        restaurant.reviews.latest.user = restaurant.reviews.latest.users.name
+        delete restaurant.reviews.highest.users
+        delete restaurant.reviews.lowest.users
+        delete restaurant.reviews.latest.users
+    }
+    return restaurant;
 }
 exports.find_by_slug = find_by_slug;
 

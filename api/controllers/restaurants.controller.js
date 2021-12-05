@@ -5,6 +5,14 @@ exports.get_restaurants = async function(req, res) {
     res.send(restaurants);
 };
 
+exports.get_restaurant_by_slug = async function(req, res) {
+    let restaurant = await restaurant_service.find_by_slug(req.params.slug);
+    if (!restaurant) {
+        return res.status(404).send()
+    }
+    res.send(restaurant);
+};
+
 exports.create_restaurant = async function(req, res) {
     try {
         let restaurant = await restaurant_service.create_restaurant(req.body.name);

@@ -18,3 +18,9 @@ npx prisma db pull
 ```
 npx prisma generate
 ```
+
+- Generate JWT secret
+```
+node generate_secret.js
+```
+And copy the output in the .env file

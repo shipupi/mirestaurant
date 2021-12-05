@@ -1,7 +1,0 @@
-{
-    "restaurant": {
-        "server": {
-            "port": 8085
-        }
-    }
-}

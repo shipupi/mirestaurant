@@ -1,15 +1,13 @@
 <template>
-  <div class="card blue-grey darken-1">
+  <div class="card blue-grey darken-1" >
     <div class="card-content white-text">
       <div class="centered"> 
         <Rating :rating="rating" :name="name"/>
       </div>
-      <p>I am a very simple card. I am good at containing small bits of information.
-      I am convenient because I require little markup to use effectively.</p>
+      <p>{{message}}</p>
     </div>
     <div class="card-action">
-      <a href="#">This is a link</a>
-      <a href="#">This is a link</a>
+      <div class="orange-text">By {{user}}</div>
     </div>
   </div>
 </template>
@@ -25,6 +23,8 @@ export default {
   props: {
     rating: Number,
     name: String,
+    user: String,
+    message: String,
   }
 }
 </script>
@@ -36,7 +36,10 @@ export default {
 }
 
 .card {
-  min-height: 200px
+  min-height: 200px;
+  width: fit-content;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .centered {
@@ -47,4 +50,5 @@ export default {
 .col {
   margin-right: auto;
 }
+
 </style>

@@ -1,6 +1,7 @@
-const config = require('config');
 const express = require('express');
+require('dotenv').config()
 const app = express();
+const cors = require('cors')
 const routes = require('./routes/routes');
   
 function errorHandler (err, req, res, next) {
@@ -10,6 +11,7 @@ function errorHandler (err, req, res, next) {
 }
 
 app.use(express.json());
+app.use(cors())
 app.get('/', (req, res, next) => {
     try {
         throw new Error('BROKEN') // Express will catch this on its own.
@@ -20,6 +22,6 @@ app.get('/', (req, res, next) => {
 app.use('/api', routes)
 app.use(errorHandler);
 
-app.listen(config.get('restaurant.server.port'), function () {
-    console.log('app listening ats port %s', config.get('restaurant.server.port'));
+app.listen(process.env.API_PORT, function () {
+    console.log('app listening ats port %s', process.env.API_PORT);
 });
