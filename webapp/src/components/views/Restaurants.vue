@@ -97,7 +97,9 @@ export default {
 <style lang="css" scoped>
     table {
         min-height: 500px;
+        table-layout: fixed;
     }
+    .
     nav .brand-logo {
         position: relative;
     }
