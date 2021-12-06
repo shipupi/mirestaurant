@@ -128,7 +128,7 @@ export default {
                     })
                     this.errors = Object.assign({}, this.errors, errors)
                     console.log(this.errors)
-                } else if (error.response.status == 500) {
+                } else if (error.response.status ==  500) {
                     this.$toast.error("There was a problem with the server");
                 }
             });
@@ -151,7 +151,7 @@ export default {
                     })
                     this.errors = Object.assign({}, this.errors, errors)
                     console.log(this.errors)
-                } else if (error.response.status == 500) {
+                } else if (error.response.status ==  500) {
                     this.$toast.error("There was a problem with the server");
                 }
             });
@@ -165,6 +165,7 @@ export default {
               this.$http.delete(this.$api_url + '/users/' + this.$route.params.user_id)
               .then(() => {
                 this.$toast.success('User deleted')
+                this.$router.push('/admin/users')
               }).catch((error) => {
                 if (error.response.status == 400) {
                     this.$toast.error('Cannot delete authenticated user')

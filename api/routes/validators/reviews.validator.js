@@ -39,7 +39,10 @@ exports.reviewValidator = {
     comment: {
         notEmpty: false,
         isLength: {
-            max: 255,
+            options: {
+                max: 255,
+                min: 3
+            }
         },
         errorMessage: 'Comment must be between 3 and 255 characters',
         escape: true,

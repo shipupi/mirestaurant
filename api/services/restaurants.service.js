@@ -29,11 +29,20 @@ exports.create_restaurant = async function(name) {
     return restaurants_orm.create_restaurant(name, slug);
 }
 
+exports.edit_restaurant = async function(id, name) {
+    let slug = getSlug(name);
+    let maybe_restaurant = await this.find_by_slug(slug);
+    if (maybe_restaurant && maybe_restaurant.restaurant_id != id) {
+        return null;
+    }
+    return restaurants_orm.edit_restaurant(id, name, slug);
+}
+
 exports.find_by_name = async function(name) {
     return restaurants_orm.find_by_name(name);
 }
 
-const find_by_slug = async function(slug) {
+const find_by_slug = async function(slug, is_admin) {
     let restaurant = await restaurants_orm.find_by_slug(slug);
     if (!restaurant) {
         return null;
@@ -45,6 +54,9 @@ const find_by_slug = async function(slug) {
         restaurant.reviews.sort((a, b) => b.rating - a.rating)
         let highest = restaurant.reviews[0];
         let lowest = restaurant.reviews[restaurant.reviews.length - 1]
+        if (is_admin) {
+            restaurant.all_reviews = restaurant.reviews
+        }
         restaurant.reviews = {
             highest: highest,
             lowest: lowest,

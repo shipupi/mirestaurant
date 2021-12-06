@@ -5,9 +5,18 @@ exports.get_reviews = async function(req, res) {
     res.send(reviews);
 };
 
+exports.get_by_id = async function(req, res) {
+    let review_id = parseInt(req.params.review_id);
+    let review = await review_service.find_by_id(review_id);
+    if (!review) {
+        return res.status(404).send()
+    }
+    res.send(review)
+}
+
 exports.create_review = async function(req, res) {
     try {
-        let user_id = 1; // TODO: get logged user id
+        let user_id = req.logged_user.user_id;
         let restaurant_id = parseInt(req.body.restaurant_id);
         let review = await review_service.create_review(restaurant_id, user_id, req.body.rating, req.body.comment);
         res.status(201).json(review.review_id);
@@ -34,7 +43,14 @@ exports.delete_review = async function(req, res) {
     }
 };
 
-exports.edit_review = async function(req, res) {
+exports.patch_review = async function(req, res) {
     let review_id = parseInt(req.params.review_id);
-    res.send('NOT IMPLEMENTED: edit review');
+    try {
+        let review = await review_service.patch_review(review_id, parseInt(req.body.rating), req.body.comment);
+        res.send(review);
+    } catch (e) {
+        console.log(e)
+        res.status(500).send("Unable to review user.");
+    }
+    
 };

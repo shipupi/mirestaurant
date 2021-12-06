@@ -26,6 +26,19 @@ exports.find_by_id = async function(id) {
   return review;
 }
 
+exports.patch_review = async function(review_id, rating, comment) {
+  let data = {}
+  if (rating != null) data.rating = rating;
+  if (comment != null) data.comment = comment;
+  const review = await prisma.reviews.update({
+    where: {
+      review_id: review_id
+    },
+    data: data
+  })
+  return review
+}
+
 exports.delete_review = async function(review_id) {
   const review_deletion = await prisma.reviews.delete({where: {
     review_id: review_id

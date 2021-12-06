@@ -2,7 +2,7 @@
     <div>
         <div class="section no-pad-bot" id="index-banner" >
             <div class="container">
-                <h1 class="header orange-text">Create User</h1>
+                <h1 class="header orange-text">Create Restaurant</h1>
             </div>
         </div>
         <div class="container">
@@ -13,18 +13,6 @@
                         <label for="name">Name</label>
                         <span v-if="errors.name" class="helper-text" :data-error="errors.name" />
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="email" type="email" v-model="email" :class="{invalid: errors.email}">
-                        <label for="email">Email</label>
-                        <span v-if="errors.email" class="helper-text" :data-error="errors.email" />
-                    </div>
-                </div>
-                <div class="input-field col s12">
-                    <input id="password" type="password" v-model="password" :class="{invalid: errors.password}">
-                    <label for="password">Password</label>
-                    <span v-if="errors.password" class="helper-text" :data-error="errors.password" />
                 </div>
                 <div class="row">
                     <button class="btn waves-effect waves-light" type="submit" name="action" >Save
@@ -39,13 +27,10 @@
 
 <script>
 export default {
-  name: 'CreateUser',
+  name: 'CreateRestaurant',
   data: function () {
     return {
         name: '',
-        email: '',
-        password: '',
-        is_admin: false,
         errors: {}
     }
   },
@@ -56,15 +41,13 @@ export default {
           e.preventDefault()
           let data = {
               name: this.name,
-              email: this.email,
-              password: this.password
           }
           this.errors = {}
-          this.$http.post(this.$api_url + '/users/', data)
+          this.$http.post(this.$api_url + '/restaurants/', data)
           .then((response) => {
-              let user = response.data.user;
-              this.$router.push('/admin/users/' + user.user_id)
-              this.$toast.success('User created')
+              let restaurant = response.data;
+              this.$router.push('/admin/restaurants/' + restaurant.slug)
+              this.$toast.success('Restaurant created')
           }).catch((error) => {
                 if (error.response.status == 400 || error.response.status == 401) {
                     let errors = {}

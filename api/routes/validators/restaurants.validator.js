@@ -3,13 +3,15 @@ const restaurant_service = require('../../services/restaurants.service');
 exports.restaurant_validator = {
     name: {
         isLength: {
-            min: 3,
-            max: 49
+            options: {
+                min: 3,
+                max: 49
+            }
         },
         custom: {
-            options: async (value) => {
+            options: async (value, {req}) => {
                 maybe_restaurant = await restaurant_service.find_by_name(value);
-                if (maybe_restaurant) {
+                if (maybe_restaurant && maybe_restaurant.restaurant_id != req.params.restaurant_id) {
                     return Promise.reject("Restaurant already exists");
                 }
             }

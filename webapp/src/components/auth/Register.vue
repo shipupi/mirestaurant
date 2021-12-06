@@ -64,7 +64,7 @@ export default {
                 if (localStorage.getItem('jwt') != null) {
                     EventBus.$emit('loggedIn')
                     if (is_admin == true) {
-                        this.$router.push('/admin')
+                        this.$router.push('/admin/restaurants')
                     }
                     else {
                         this.$router.push('/')
@@ -83,7 +83,7 @@ export default {
                     })
                     this.errors = Object.assign({}, this.errors, errors)
                     console.log(this.errors)
-                } else if (error.response.status == 500) {
+                } else if (error.response.status ==  500) {
                     this.$toast.error("There was a problem with the server");
                 }
             });

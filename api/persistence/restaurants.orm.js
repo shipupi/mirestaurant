@@ -4,7 +4,7 @@ exports.get_restaurants = async function() {
   const restaurants = await prisma.restaurants.findMany({
     include: {
       reviews: true
-    }
+    },
   });
   return restaurants;
 }
@@ -17,6 +17,19 @@ exports.create_restaurant = async function(name, slug) {
     }
   });
   return restaurant_creation;
+} 
+
+exports.edit_restaurant = async function(id, name, slug) {
+  const restaurant = await prisma.restaurants.update({
+    where: {
+      restaurant_id: id
+    },
+    data: {
+      name: name,
+      slug: slug
+    }
+  });
+  return restaurant;
 } 
 
 exports.find_by_id = async function(id) {

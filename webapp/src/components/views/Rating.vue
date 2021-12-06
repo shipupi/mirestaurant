@@ -1,8 +1,13 @@
 <template>
     <div class="rating">
-        <span v-for="i in parseInt(rating)" :key="name + i" class="fa fa-star checked"></span>
-        <span v-for="i in (5 - parseInt(rating))" :key="name + (parseInt(rating) + i)" class="fa fa-star "></span>
-        <span class="rating-val">{{rating.toFixed(2)}}</span>
+        <div v-if="rating >= 1 && rating <= 5">
+            <span v-for="i in parseInt(rating)" :key="name + i" class="fa fa-star checked"></span>
+            <span v-for="i in (5 - parseInt(rating))" :key="name + (parseInt(rating) + i)" class="fa fa-star "></span>
+            <span class="rating-val">{{rating.toFixed(2)}}</span>
+        </div>
+        <div v-else>
+            <span v-for="i in 5" :key="name + i" class="fa fa-star "></span>
+        </div>
     </div>
 </template>
 

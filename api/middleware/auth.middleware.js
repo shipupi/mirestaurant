@@ -50,6 +50,25 @@ exports.authenticate = async (req, res, next) => {
     }
 }; 
 
+exports.processJWT = (req, res, next) => {
+    if (!req.headers['authorization']) {
+        return next();
+    }
+    let split_auth = req.headers['authorization'].split(' ');
+    if (split_auth.length != 2) {
+        return next();
+    }
+    if (split_auth[0] !== 'Bearer') {
+        return next();
+    }
+    try {
+        req.logged_user = jwt.verify(split_auth[1], process.env.JWT_SECRET);
+        return next();
+    } catch (e) {
+        return next();
+    }
+}; 
+
 exports.adminOnly = (req, res, next) => {
     if (req.logged_user.is_admin) {
         return next();

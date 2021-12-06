@@ -18,3 +18,7 @@ exports.delete_review = async function(id) {
     if (!review) return null;
     return reviews_orm.delete_review(id);
 }
+
+exports.patch_review = async function(review_id, rating, comment){
+    return reviews_orm.patch_review(review_id, rating, comment);
+}
