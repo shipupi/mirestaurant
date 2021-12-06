@@ -10,6 +10,10 @@ DATABASE_URL="postgresql://user:pass@database_host:database_port/db_name"
 ```
 psql toptal -f restaurants/api/persistence/migrations/create_tables.sql
 ```
+- Seed 
+```
+psql toptal -f persistence/migrations/seed.sql
+```
 - Create prisma schema
 ```
 npx prisma db pull
