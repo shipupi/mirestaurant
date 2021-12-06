@@ -1,8 +1,12 @@
 <template>
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
-      <h1 class="header left orange-text">Restaurants</h1>
-      <Restaurants/>
+      <div class="row">
+        <h1 class="header left orange-text">Restaurants</h1>
+      </div>
+      <div class="row">
+        <Restaurants/>
+      </div>
     </div>
   </div>
 </template>

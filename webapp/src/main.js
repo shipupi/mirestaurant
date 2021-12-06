@@ -14,6 +14,17 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.prototype.$api_url = 'http://localhost:8085/api'
 
+Vue.filter('limit', function (arr) {
+  return arr
+  // if ( ! Array.isArray(arr)) return false;
+  // return arr.slice(0, limit);
+})
+
+Vue.filter('offset', function (arr, offset) {
+  if ( ! Array.isArray(arr)) return false;
+  return arr.slice(offset, arr.length)
+});
+
 new Vue({
   router,
   render: h => h(App)
