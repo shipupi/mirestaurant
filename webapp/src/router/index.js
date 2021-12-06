@@ -6,6 +6,7 @@ import Auth from '../components/auth/Auth.vue'
 import Admin from '../components/admin/Admin.vue'
 import EditRestaurant from '../components/admin/EditRestaurant.vue'
 import EditUser from '../components/admin/EditUser.vue'
+import CreateUser from '../components/admin/CreateUser.vue'
 import NotFound from '../components/errors/NotFound.vue'
 
 Vue.use(VueRouter)
@@ -41,11 +42,25 @@ const routes = [
     path: '/admin/restaurants/:slug',
     name: 'EditRestaurant',
     component: EditRestaurant,
+    meta: {
+      adminOnly: true
+    }
   },
   {
     path: '/admin/users/:user_id',
     name: 'EditUser',
     component: EditUser,
+    meta: {
+      adminOnly: true
+    }
+  },
+  {
+    path: '/admin/create_user',
+    name: 'CreateUser',
+    component: CreateUser,
+    meta: {
+      adminOnly: true
+    }
   },
   {
     path: '*',

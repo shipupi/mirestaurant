@@ -49,6 +49,7 @@ export default {
       handleSubmit(e) {
         e.preventDefault()
         if (this.password.length > 0) {
+            this.errors = {}
             this.$http.post(this.$api_url + '/users', {
                 name: this.name,
                 email: this.email,
@@ -75,7 +76,6 @@ export default {
             .catch((error) => {
                 if (error.response.status == 400 || error.response.status == 401) {
                     let errors = {}
-                    this.errors = errors
                     this.$toast.error("Invalid input");
                     let err = error.response.data.errors
                     err.forEach(e => {

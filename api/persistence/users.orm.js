@@ -50,8 +50,9 @@ exports.patch_user = async function(id, name, email, hashed_password, is_admin) 
   if (name) data.name = name;
   if (email) data.email = email;
   if (hashed_password) data.password = hashed_password;
-  if (is_admin) data.is_admin = is_admin;
+  if (is_admin != null) data.is_admin = is_admin;
   const user = await prisma.users.update({
+    select: user_select,
     where: {
       user_id: id
     },

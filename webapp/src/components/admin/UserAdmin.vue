@@ -1,5 +1,6 @@
 <template>
-    <div class="column s12">
+    <div class="column s12 left-align">
+        <router-link to="/admin/create_user" class="waves-effect waves-light btn-large "><i class="material-icons left">add</i>New User</router-link>
         <table class="center highlight">
             <thead>
                 <tr>

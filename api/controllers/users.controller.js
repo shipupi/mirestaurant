@@ -36,6 +36,9 @@ exports.create_user = async function(req, res) {
 
 exports.delete_user = async function(req, res) {
     let user_id = parseInt(req.params.user_id);
+    if (user_id == req.logged_user.user_id) {
+        return res.status(400).send("Cannot delete authenticated user");
+    }
     try {
         let user_deletion = await user_service.delete_user(user_id);
         if (user_deletion) {
@@ -59,6 +62,7 @@ exports.patch_user = async function(req, res) {
         let user = await user_service.patch_user(user_id, req.body.name, req.body.email, req.body.password, req.body.is_admin);
         res.send(user);
     } catch (e) {
+        console.log(e)
         res.status(500).send("Unable to patch user.");
     }
 };

@@ -41,6 +41,6 @@ exports.userValidator = {
             }
         },
         isStrongPassword: {},
-        errorMessage: 'Password must be greater than 8 and contain at least one uppercase letter, one lowercase letter, one number and one symbol',
+        errorMessage: 'Password must be at least 8  characters and contain at least one uppercase letter, one lowercase letter, one number and one symbol',
     },
 }
