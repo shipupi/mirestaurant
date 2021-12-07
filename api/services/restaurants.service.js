@@ -107,3 +107,4 @@ const getSlug = function(str) {
   
     return str;
   };
+  exports.get_slug = getSlug;

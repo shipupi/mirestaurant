@@ -11,7 +11,11 @@ exports.restaurant_validator = {
         custom: {
             options: async (value, {req}) => {
                 maybe_restaurant = await restaurant_service.find_by_name(value);
+                maybe_restaurant2 = await restaurant_service.find_by_slug(restaurant_service.get_slug(value))
                 if (maybe_restaurant && maybe_restaurant.restaurant_id != req.params.restaurant_id) {
+                    return Promise.reject("Restaurant already exists");
+                }
+                if (maybe_restaurant2 && maybe_restaurant2.restaurant_id != req.params.restaurant_id) {
                     return Promise.reject("Restaurant already exists");
                 }
             }

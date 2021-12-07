@@ -1,18 +1,16 @@
-# Installation
+# API
 
-## API
-
-- Set .env  file with DATABASE_URL, make a copy from .env.example. Database URL should look like this:
+- Create .env.prod and .env.test files with DATABASE_URL, make a copy from .env.example as reference. Database URL should look like this:
 ```
 DATABASE_URL="postgresql://user:pass@database_host:database_port/db_name"
 ```
 - Run migration with:
 ```
-psql toptal -f restaurants/api/persistence/migrations/create_tables.sql
+psql DB_NAME -f restaurants/api/persistence/migrations/create_tables.sql
 ```
 - Seed 
 ```
-psql toptal -f persistence/migrations/seed.sql
+psql DB_NAME -f restaurants/api/persistence/migrations/seed.sql
 ```
 - Create prisma schema
 ```
@@ -27,4 +25,33 @@ npx prisma generate
 ```
 node generate_secret.js
 ```
-And copy the output in the .env file
+And copy the output in the .env.prod file
+
+- Start server
+```
+npm start
+```
+
+
+
+# WebApp
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```

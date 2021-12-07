@@ -30,7 +30,6 @@ exports.authenticate = async (req, res, next) => {
 
  exports.validJWT = (req, res, next) => {
     if (!req.headers['authorization']) {
-        console.log("No authorization");
         return res.status(401).send();
     }
     let split_auth = req.headers['authorization'].split(' ');

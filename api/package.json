@@ -4,8 +4,9 @@
   "description": "Restaurant reviewer for toptal screening",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=prod node app.js",
+    "pretest": "cross-env NODE_ENV=test node persistence/migrations/migrate.js --reset; cross-env NODE_ENV=test node persistence/migrations/migrate.js --migrate; ",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --runInBand --verbose=true"
   },
   "keywords": [
     "toptal",
@@ -25,6 +26,18 @@
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "prisma": "^3.6.0"
+    "cross-env": "^7.0.3",
+    "jest": "^27.4.3",
+    "pg": "^8.7.1",
+    "prisma": "^3.6.0",
+    "stdio": "^2.1.1",
+    "supertest": "^6.1.6"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
+  
 }

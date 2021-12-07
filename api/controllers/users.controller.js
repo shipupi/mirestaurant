@@ -13,9 +13,9 @@ exports.get_by_id = async function(req, res) {
     let user_id = parseInt(req.params.user_id);
     let user = await user_service.find_by_id(user_id);
     if (!user) {
-        console.log("Username not found");
         return res.status(404).send();
     }
+    delete user['password']
     res.send(user);
 };
 
@@ -55,6 +55,10 @@ exports.delete_user = async function(req, res) {
 
 exports.patch_user = async function(req, res) {
     let user_id = parseInt(req.params.user_id);
+    let user = await user_service.find_by_id(user_id);
+    if (!user) {
+        return res.status(404).send();
+    }
     if (req.body.password) {
         req.body.password = auth_middleware.hash_password(req.body.password);
     }
